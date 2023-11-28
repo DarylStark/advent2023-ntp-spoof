@@ -3,6 +3,8 @@ from datetime import datetime
 from scapy.all import IP, UDP, Ether, send, sniff
 from scapy.layers.ntp import NTP
 
+import sys
+
 response_date = datetime(year=2023, month=12, day=1, hour=13)
 
 
@@ -27,6 +29,13 @@ def packet_callback(packet: Ether):
 
 
 if __name__ == '__main__':
+    if len(sys.argv) == 2:
+        response_date = datetime(year=2023,
+                                 month=12,
+                                 day=int(sys.argv[1]),
+                                 hour=13)
+    print(response_date)
+
     # Start sniffing for NTP traffic
     sniff(
         count=1000,
